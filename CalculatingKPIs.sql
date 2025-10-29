@@ -24,12 +24,10 @@ calc_churn_rate AS ( -- calculate churn and account for several months long peri
 	FROM churned_customers
 	FULL OUTER JOIN starting_customers ON starting_customers.customer_id = churned_customers.customer_id
 	),
-customer_AOV AS ( -- Average Order Value
-	SELECT customer_id, 
-		ROUND(SUM(quantity*unit_price)/COUNT(invoice_date),2) AS AOV
+company_AOV AS ( -- Average Order Value
+	SELECT ROUND(SUM(quantity*unit_price)/COUNT(invoice_date),2) AS AOV
 	FROM orders
-	GROUP BY customer_id
-	ORDER BY AOV DESC
+	WHERE quantity > 0 AND unit_price > 0
 	),
 customer_APF AS ( -- Average Purchase Frequency
 	SELECT customer_id, 
@@ -45,12 +43,11 @@ customer_ACL AS ( -- Average Customer Lifetime
 -- KPIs. MIN() is used to allow aggregation to find time as customer to filter out short-term, high-frequency customers
 SELECT customers.customer_id,
 	FLOOR(EXTRACT(EPOCH FROM (MAX(invoice_date)-MIN(invoice_date)))/(30.5*24*60*60)) AS time_as_customer,
-	MIN(AOV) AS AOV,
+	(SELECT AOV FROM company_AOV) AS AOV,
 	MIN(APF) AS APF,
 	MIN(ACL) AS ACL,
-	MIN(ROUND(AOV*APF*ACL,2)) AS CLV,
+	MIN(ROUND((SELECT AOV FROM company_AOV)*APF*ACL,2)) AS CLV
 FROM customers
-INNER JOIN customer_AOV on customer_AOV.customer_id = customers.customer_ID
 INNER JOIN customer_APF on customer_APF.customer_id = customers.customer_ID
 INNER JOIN customer_ACL on customer_ACL.customer_id = customers.customer_ID
 INNER JOIN orders ON orders.customer_id = customers.customer_id
