@@ -10,7 +10,7 @@
 
 
 
-Please see [portfolio post](https://gcalgit93.github.io/gcalgit93/project/2025/10/10/Kaggle-Data-Project.html) for more of a breakdown of project. 
+PLEASE SEE: [portfolio post](https://gcalgit93.github.io/gcalgit93/project/2025/10/10/Kaggle-Data-Project.html) for more of a breakdown of the project. 
 
 
 
