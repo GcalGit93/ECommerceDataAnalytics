@@ -6,11 +6,11 @@
 
 
 
-\# Kaggle E-Commerce Data Analytics Project
+# Kaggle E-Commerce Data Analytics Project
 
 
 
-Please see \[portfolio post](https://gcalgit93.github.io/gcalgit93/project/2025/10/10/Kaggle-Data-Project.html) for more of a breakdown of project. 
+Please see [portfolio post](https://gcalgit93.github.io/gcalgit93/project/2025/10/10/Kaggle-Data-Project.html) for more of a breakdown of project. 
 
 
 
